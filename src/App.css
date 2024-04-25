@@ -116,6 +116,67 @@ body {
   margin-right: 0.75rem;
 }
 
+.main {
+  min-height: calc(100vh - 14rem);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 6rem 10rem;
+  margin-bottom: 0;
+}
+
+.chats {
+  height: calc(100vh - 17rem);
+  width: 100%;
+  max-width: 70rem;
+  overflow: hidden;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.chat {
+  margin: 1rem;
+  padding: 2rem 3rem;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: flex-start;
+  text-align: center;
+}
+
+.chatFooter {
+  width: 100%;
+  margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.inp {
+  background: rgba(28, 30, 58, 1);
+  width: 70rem;
+  padding: 0.5rem;
+  display: flex;
+  align-items: center;
+  border-radius: 0.5rem;
+}
+
+.inp > input {
+  color: white;
+  width: calc(100% - 3rem);
+  outline: none;
+  padding: 1.25rem;
+}
+
+.inp > input, .send {
+  background: transparent;
+  border: none;
+}
+
+.chatFooter > p {
+  margin: 2rem 0;
+}
+
 button {
   display: flex;
   cursor: pointer;
