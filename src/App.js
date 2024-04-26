@@ -8,8 +8,38 @@ import rocket from "./assets/rocket.svg";
 import sendBtn from "./assets/send.svg";
 import userIcon from "./assets/user-icon.png";
 import gptImgLogo from "./assets/chatgptLogo.svg";
+import { sendMsgToOpenAi } from "./openai";
+import { useEffect, useRef, useState } from "react";
 
 function App() {
+  const msgEnd = useRef(null);
+
+  const [input, setInput] = useState("");
+  const [messages, setMessages] = useState({
+    text: "Hi ChatGPT",
+    isBot: true,
+  });
+
+  useEffect(() => {
+    msgEnd.current.scrollIntoView();
+  }, [messages])
+
+  const handleSend = async () => {
+    const text = input;
+    setInput("");
+    setMessages([...messages, { text, isBot: false }]);
+    const res = await sendMsgToOpenAi(text);
+    setMessages([
+      ...messages,
+      { text, isBot: false },
+      { text: res, isBot: true },
+    ]);
+  };
+
+  const handleEnter = async (e) => {
+    if(e.key == 'Enter') await handleSend();
+  }
+
   return (
     <div className="App">
       <div className="sidebar">
@@ -52,27 +82,30 @@ function App() {
       </div>
       <div className="main">
         <div className="chats">
-          <div className="chat bot">
-            <img className="chatImg" src={userIcon} alt="" />
-            <p className="txt">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-              reiciendis saepe perferendis! Eaque beatae, magni maiores id
-              possimus debitis aperiam.
-            </p>
-          </div>
-          <div className="chat">
-            <img className="chatImg" src={chatgptLogo} alt="" />
-            <p className="txt">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
-              reiciendis saepe perferendis! Eaque beatae, magni maiores id
-              possimus debitis aperiam.
-            </p>
-          </div>
+          {messages.map((message, i) => (
+            <div key={i} className={message.isBot ? "chat bot" : "chat"}>
+              <img
+                className="chatImg"
+                src={message.isBot ? gptImgLogo : userIcon}
+                alt=""
+              />
+              <p className="txt">{message.txt}</p>
+            </div>
+          ))}
+          <div ref={msgEnd}>
         </div>
         <div className="chatFooter">
           <div className="inp">
-            <input type="text" placeholder="Send a message" />
-            <button className="send">
+            <input
+              type="text"
+              placeholder="Send a message"
+              value={input}
+              onKeyDown={handleEnter}
+              onChange={(e) => {
+                setInput(e.target.value);
+              }}
+            />
+            <button className="send" onClick={handleSend}>
               <img src={sendBtn} alt="" />
             </button>
           </div>
