@@ -52,8 +52,8 @@ function App() {
       </div>
       <div className="main">
         <div className="chats">
-          <div className="chat">
-            <img src={userIcon} alt="" />
+          <div className="chat bot">
+            <img className="chatImg" src={userIcon} alt="" />
             <p className="txt">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
               reiciendis saepe perferendis! Eaque beatae, magni maiores id
@@ -61,7 +61,7 @@ function App() {
             </p>
           </div>
           <div className="chat">
-            <img src={chatgptLogo} alt="" />
+            <img className="chatImg" src={chatgptLogo} alt="" />
             <p className="txt">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Optio
               reiciendis saepe perferendis! Eaque beatae, magni maiores id
